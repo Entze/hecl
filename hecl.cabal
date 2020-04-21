@@ -1,0 +1,32 @@
+name:                hecl
+version:             0.1.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/Entze/hecl#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Lukas Grassauer
+maintainer:          entze@grassauer.eu
+copyright:           2020 Lukas Grassauer
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  default-language:    Haskell2010
+  hs-source-dirs:      src
+  exposed-modules:     Hecl.Math.NumberTheory.MathSequence,
+                       Hecl.String.StringList
+  build-depends:       base >= 4.7 && < 5
+
+executable hec
+  default-language:    Haskell2010
+  main-is:             Main.hs
+--  other-modules:       Hecl
+  build-depends:       hecl,
+                       base >= 4.7 && < 5
+
+
+source-repository head
+  type:     git
+  location: https://github.com/Entze/hecl
