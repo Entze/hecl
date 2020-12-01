@@ -13,19 +13,34 @@ extra-source-files:  README.md
 cabal-version:       >=1.10
 
 library
-  default-language:    Haskell2010
-  hs-source-dirs:      src
-  exposed-modules:     Hecl.Math.NumberTheory.MathSequence,
-                       Hecl.String.StringList
-  build-depends:       base >= 4.7 && < 5
+  default-language:     Haskell2010
+  hs-source-dirs:       src
+  exposed-modules:      Hecl.Math.NumberTheory,
+                        Hecl.Math.NumberTheory.MathSequence,
+                        Hecl.String.StringList
+  build-depends:        base >= 4.7 && < 5
 
 executable hec
-  default-language:    Haskell2010
-  main-is:             Main.hs
+  default-language:     Haskell2010
+  main-is:              Main.hs
 --  other-modules:       Hecl
-  build-depends:       hecl,
-                       base >= 4.7 && < 5
+  build-depends:        hecl,
+                        base >= 4.7 && < 5
 
+
+test-suite heclSpec
+    type:               exitcode-stdio-1.0
+  ghc-options:          -Wall
+  main-is:              heclSpec.hs
+  hs-source-dirs:       test
+  build-depends:        base >= 4.7 && < 5,
+                        hspec >= 2.7 && <3,
+                        hspec-core >= 2.7 && <3,
+                        QuickCheck >= 2.13 && <3,
+                        leancheck >= 0.9 && <1,
+                        hspec-leancheck >= 0.0.4 && < 1,
+                        hecl
+  default-language:    Haskell2010
 
 source-repository head
   type:     git
