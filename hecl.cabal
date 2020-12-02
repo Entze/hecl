@@ -15,10 +15,14 @@ cabal-version:       >=1.10
 library
   default-language:     Haskell2010
   hs-source-dirs:       src
-  exposed-modules:      Hecl.Math.NumberTheory,
+  exposed-modules:      Hecl.Math,
+                        Hecl.Math.NumberTheory,
                         Hecl.Math.NumberTheory.MathSequence,
-                        Hecl.String.StringList
-  build-depends:        base >= 4.7 && < 5
+                        Hecl.String.StringList,
+                        Hecl.String
+  build-depends:        base >= 4 && <= 5,
+                        regex-tdfa >= 1.3 && < 2
+--                        liquidhaskell >= 0.8 && <1
 
 executable hec
   default-language:     Haskell2010

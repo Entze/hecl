@@ -1,13 +1,20 @@
 module Hecl.Math.NumberTheory where
-
-findSummands :: Integral int => Int -> int -> [int] -> [[int]]
-findSummands 0 _ _ = []
-findSummands _ _ [] = []
-findSummands _ 0 _ = []
-findSummands 1 s ls = (map (:[]) . filter (== s)) ls
-findSummands n s (l:ls)
-  | null matching = further
-  | otherwise = (map (l:) matching) ++ further
+{-@ findPositiveSummands :: Integral int => Nat -> Nat -> [Nat] -> [[Nat]] @-}
+findPositiveSummands :: Integral int => Int -> int -> [int] -> [[int]]
+findPositiveSummands 0 _ _ = []
+findPositiveSummands _ _ [] = []
+findPositiveSummands n s ls
+  | n >= 0 && s > 0 && (length . take (n+1)) ls >= n = findPositiveSummands' n s (filter (<= s) ((filter (> 0)) ls))
+  | otherwise = []
   where
-    further = findSummands n s ls
-    matching = findSummands (n-1) (s-l) ls
+    findPositiveSummands' :: Integral int => Int -> int -> [int] -> [[int]]
+    findPositiveSummands'  0  _  _ = []
+    findPositiveSummands'  _  _ [] = []
+    findPositiveSummands'  1  s ls = (map (:[]) . filter (== s)) ls
+    findPositiveSummands' n s (l:ls)
+      | s < 0             = []
+      | null matching     = further
+      | otherwise         = (map (l:) matching) ++ further
+      where
+        further           = findPositiveSummands'     n     s ls
+        matching          = findPositiveSummands' (n-1) (s-l) ls
