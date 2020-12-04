@@ -40,6 +40,20 @@ main = hspec $ do
               QC.property $ (propFindPositiveSummandsLengthIsN :: NonNegative Int -> Positive Integer -> [Positive Integer] -> Bool)
             modifyMaxSuccess (const 100) $ it "all ((== s) . sum) findPositiveSummands _ s _ ->> True: QuickCheck" $
               QC.property $ (propFindPositiveSummandsSumIsS :: NonNegative Int -> Positive Integer -> [Positive Integer] -> Bool)
+    describe "Special" $ do
+      context "Given Testcases" $ do
+        it "getPath testForest (trajectory 0 0 3 1) ->> \"..#.##.####\"" $
+          getPath testForest (trajectory 0 0 3 1) `shouldBe` "..#.##.####"
+        it "countTrees . getPath testForest (trajectory 0 0 3 1) ->> 7" $
+          (countTrees . getPath testForest) (trajectory 0 0 3 1) `shouldBe` 7
+        it "product $ map (countTrees . getPath testForest) (map (uncurry (trajectory 0 0)) trajectorySteps) ->> 336" $
+          product (map (countTrees . getPath testForest) (map (uncurry (trajectory 0 0)) trajectorySteps)) `shouldBe` 336
+
+
+testForest :: Forest
+testForest = makeForest ["..##.......","#...#...#..",".#....#..#.","..#.#...#.#",".#...##..#.","..#.##.....",".#.#.#....#",".#........#","#.##...#...","#...##....#",".#..#...#.#"]
+
+trajectorySteps = [(1,1), (3,1), (5,1), (7,1), (1,2)]
 
 propFindPositiveSummandsLengthIsN :: Integral int => NonNegative Int -> Positive int -> [Positive int] -> Bool
 propFindPositiveSummandsLengthIsN (NonNegative n) (Positive s) ls' = all ((== n) . length) (findPositiveSummands n s ls)
